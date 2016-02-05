@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block container %}
+
+  <div class="text-center">
+
+    <h1>Search Result for </h1>
+    <p class="lead">{{term}}</p>
+    {% if triumphs %}
+	<div class="list-group">
+		{% for triumph in triumphs %}
+
+	  		<a href="#" class="list-group-item active">{{triumph.result}}</a>
+		{% endfor %}
+	</div>
+	{% else %}
+		<p> No result found </p>
+	{% endif %}
+
+
+  </div>
+  
+ {% endblock container %}
