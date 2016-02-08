@@ -1,22 +1,33 @@
+import datetime
+
+import vinlookup.bsa
+import vinlookup.triumph
+
 from django.shortcuts import render
 from django.views.generic import ListView
 
-from .models import Triumph, UserSearchHistory
-
-from .triumph import definitions
-import datetime
-
+from .models import Search, UserSearchHistory
 
 class SearchView(ListView):
-    model = Triumph
-    context_object_name = 'triumphs'
-    template_name = 'triumph_search_results.html'
+    model = Search
+    context_object_name = 'parts'
+    template_name = 'search_results.html'
 
     def get_queryset(self):
+        brand = self.request.GET.get('brand')
         term = self.request.GET.get('term')
-        results = Triumph.objects.filter(term=term)
+        print("brand="+brand)
+        print("term="+term)
+        results = Search.objects.filter(brand=brand, term=term)
         if not results:
-            results = self.get_new_search_term(term)
+            if brand == "bsa":
+                results = vinlookup.bsa.decode(term)
+            elif brand == "triumph":
+                import pdb
+                pdb.set_trace()
+                results = vinlookup.triumph.decode(term)
+            else:
+                raise Exception("Invalid brand!")
         
         if not self.request.user.is_authenticated():
             try:
@@ -28,20 +39,9 @@ class SearchView(ListView):
         
     def get_context_data(self, **kwargs):
         context = super(SearchView, self).get_context_data(**kwargs)
-        context.update({'term':self.request.GET.get('term')})
+        context.update({'brand':self.request.GET.get('brand'),
+                        'term':self.request.GET.get('term')})
         return context
-
-    def get_new_search_term(self, term):
-        for fun in definitions:
-            try:
-                result = fun(term)
-            except:
-                return []
-            if result:
-                results = Triumph(term = term, result = result)
-                results.save()
-                return [results]
-        return []
 
     def save_to_history(self, results):
         request = self.request

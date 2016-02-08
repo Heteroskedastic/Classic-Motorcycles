@@ -10,8 +10,8 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-from setting_secret_dev import *
-#from setting_secret_pro import *
+from .settings_secret_dev import *
+#from settings_secret_pro import *
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -41,7 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home',
-    'triumph',
+    'partsearch',
 )
 
 MIDDLEWARE_CLASSES = (

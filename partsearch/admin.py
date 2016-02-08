@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Triumph, UserSearchHistory
+from .models import Search, UserSearchHistory
 
 class UserSearchHistoryAdmin(admin.ModelAdmin):
-	list_display = ('term', 'result','pub_date', 'ip_address')
+	list_display = ('search','pub_date', 'ip_address')
 
 
-admin.site.register(Triumph)
+admin.site.register(Search)
 admin.site.register(UserSearchHistory, UserSearchHistoryAdmin)

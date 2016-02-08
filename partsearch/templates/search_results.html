@@ -6,11 +6,10 @@
 
     <h1>Search Result for </h1>
     <p class="lead">{{term}}</p>
-    {% if triumphs %}
+    {% if parts %}
 	<div class="list-group">
-		{% for triumph in triumphs %}
-
-	  		<a href="#" class="list-group-item active">{{triumph.result}}</a>
+		{% for part in parts %}
+	  		<a href="#" class="list-group-item active">{{part}}</a>
 		{% endfor %}
 	</div>
 	{% else %}
