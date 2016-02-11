@@ -3,8 +3,8 @@
 
 DATABASES = {
     'default': {
-        'ENGINE': '',
-        'NAME': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
         'HOST': '',
         'PORT': '',
         'USER': '',

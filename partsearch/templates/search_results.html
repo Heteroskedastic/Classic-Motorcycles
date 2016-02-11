@@ -7,15 +7,24 @@
     <h1>Search Result for </h1>
     <p class="lead">{{term}}</p>
     {% if parts %}
-	<div class="list-group">
-		{% for part in parts %}
-	  		<a href="#" class="list-group-item active">{{part}}</a>
-		{% endfor %}
-	</div>
+        <div class="list-group">
+            {% for part in parts %}
+                <a href="#" class="list-group-item active">{{part}}</a>
+            {% endfor %}
+        </div>
+        <h2>Do you think we got it wrong? Let us know!</h2>
 	{% else %}
 		<p> No result found </p>
+		<h2>Let us know what you have so we can improve our results!</h2>
 	{% endif %}
-
+	<div>
+        <form action="{% url 'save-feedback'%}">
+            {{ parts.id }}
+            <textarea rows="5" cols="60" name="feedback" class="form-control">
+            </textarea>
+            <input type="submit" value="Send Feedback" class="btn btn-default"/>
+        </form>
+    </div>
 
   </div>
   
