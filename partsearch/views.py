@@ -3,6 +3,7 @@ import datetime
 import vinlookup.bsa
 import vinlookup.triumph
 
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
 from django.views.generic import ListView
@@ -64,7 +65,8 @@ class SearchView(ListView):
         get_ip.save()
         
 def SaveFeedback(request):
-    UserFeedback.objects.create(
-        comment=request.GET.get('feedback'),
+    user_feedback = UserFeedback.objects.create(
+        comment=request.POST.get('feedback'),
         search=Search.objects.get(pk=request.session['last_search_id']),
         date=timezone.now())
+    return HttpResponse('Feedback received succesfully!')

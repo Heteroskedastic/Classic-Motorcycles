@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>{% block title %} Old World-bikes {% endblock %}</title>
-
+        
 		<!-- meta -->
 		<meta charset="UTF-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -104,6 +104,10 @@
 	    <script src="{{STATIC_URL}}js/modernizr.custom.js"></script>
 
 		<script src="{{STATIC_URL}}js/script.js"></script>
-
+		
+		{% block javascript %}
+		
+		{% endblock%}
+		
 	</body>
 </html>
