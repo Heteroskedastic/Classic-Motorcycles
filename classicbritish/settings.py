@@ -15,8 +15,6 @@ from .settings_secret_dev import *
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
@@ -40,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap3',
     'home',
     'partsearch',
 )
@@ -94,3 +93,5 @@ STATICFILES_DIRS = (
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR,"classicbritish", "templates"),
 )
+
+LOGIN_REDIRECT_URL = "/account_details"    

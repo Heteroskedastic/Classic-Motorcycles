@@ -45,6 +45,12 @@
 								<li class="cl-effect-11"><a href="{% url 'blog'%}" data-hover="">blog</a></li>
 								<li class="cl-effect-11"><a href="{% url 'daves_corner'%}" data-hover="">Dave's Corner</a></li>
 								<li class="cl-effect-11"><a href="{% url 'contact_us'%}" data-hover="">Contact</a></li>
+								{% if user.is_anonymous %}
+								<li class="cl-effect-11"><a href="{% url 'django.contrib.auth.views.login' %}" data-hover="">Sign in</a></li>
+								{% else %}
+								<li class="cl-effect-11"><a href="{% url 'django.contrib.auth.views.logout' %}" data-hover="">Sign out</a></li>
+								<li class="cl-effect-11"><a href="{% url 'account_details' %}" data-hover="">Your Account</a></li>
+								{% endif %}
 								</ul>
 							</div><!-- /.navbar-collapse -->
 						</nav>
