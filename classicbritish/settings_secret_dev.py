@@ -11,3 +11,9 @@ DATABASES = {
         'PASSWORD': ''
     }
 }
+
+#Fill the SMTP details below
+EMAIL_HOST = ""
+EMAIL_PORT = 587
+EMAIL_HOST_USER = ""
+EMAIL_HOST_PASSWORD = ""
