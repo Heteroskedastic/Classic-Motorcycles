@@ -1,3 +1,4 @@
 Django==1.8.4
+classic-vin-lookup==16.02.07
+django-bootstrap3==6.2.2
 psycopg2==2.6.1
-https://github.com/Heteroskedastic/classic_vin_lookup/archive/master.zip
