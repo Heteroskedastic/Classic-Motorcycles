@@ -41,6 +41,18 @@ INSTALLED_APPS = (
     'bootstrap3',
     'home',
     'partsearch',
+    
+    #Requirements for django-allauth
+    # The Django sites framework is required
+    'django.contrib.sites',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # ... include the providers you want to enable:
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.twitter',      
 )
 
 MIDDLEWARE_CLASSES = (
@@ -57,7 +69,6 @@ ROOT_URLCONF = 'classicbritish.urls'
 
 WSGI_APPLICATION = 'classicbritish.wsgi.application'
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
@@ -71,12 +82,10 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
-
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
@@ -89,9 +98,35 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR,"classicbritish","static"),
 )
 
+LOGIN_REDIRECT_URL = "/account_details"    
 
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR,"classicbritish", "templates"),
+#Changed to install django-allauth
+
+# If you are running Django 1.8+, specify the context processors
+# as follows:
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR,"classicbritish", "templates")],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                # `allauth` needs this from django
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth'
+            ],
+        },
+    },
+]
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-LOGIN_REDIRECT_URL = "/account_details"    
+SITE_ID = 1
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

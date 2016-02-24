@@ -14,7 +14,8 @@ urlpatterns = patterns('',
     url(r'^register$', RegisterView, name='register_view'),
     url(r'^account_details/', AccountView, name='account_details'),
     #Django's default handlers for login, logout, password reset and change
-    url(r'^accounts/', include('django.contrib.auth.urls')),
+    #url(r'^accounts/', include('django.contrib.auth.urls')),
+    url(r'^accounts/', include('allauth.urls')),
     
     #Admin
     url(r'^admin/', include(admin.site.urls)),
