@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load bootstrap3 %}
+{% load socialaccount %}
 
 {% block container %}
 <div class="col-md-6">
@@ -16,6 +17,9 @@
     {% bootstrap_form form %}
     {% buttons submit='Change information' %}{% endbuttons %}
     </form>
+    <hr>
+    {% providers_media_js %}
+    <a href="{% provider_login_url "facebook" method="js_sdk" %}">Facebook Connect</a>
     <hr>
     <a href="{% url 'account_change_password' %}" 
        class="btn btn-default btn-info">
