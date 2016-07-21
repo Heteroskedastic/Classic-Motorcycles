@@ -1,6 +1,7 @@
-Django==1.8.4
-django-allauth==0.25.2
+Django==1.9.8
+psycopg2==2.6.2
+django-bootstrap3==7.0.1
+python-social-auth==0.2.19
+#git+https://github.com/Old-World-Bikes/Classic_Vin_Lookup.git
+#django-allauth==0.25.2
 #classic-vin-lookup==16.02.07
-git+https://github.com/Old-World-Bikes/Classic_Vin_Lookup.git
-django-bootstrap3==6.2.2
-psycopg2==2.6.1
