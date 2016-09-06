@@ -65,11 +65,15 @@
 			<button type="button" class="overlay-close"><span class="ion-ios-close-empty"></span></button>
 			<nav>
 				<ul>
-					<li><a href="#">Home</a></li>
-					<li><a href="#">Online web store</a></li>
-					<li><a href="#">Blog</a></li>
-					<li><a href="#">About</a></li>
-					<li><a href="#">Contact</a></li>
+                <li><a href="{% url 'home'%}" >Home</a></li>
+                <li><a href="{% url 'home'%}" >Web store</a></li>
+                <li><a href="{% url 'contact'%}" >Contact</a></li>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'account_details' %}" >{{user.username|title}}'s Account</a></li>
+                <li><a href="{% url 'logout' %}" >Sign out</a></li>
+                {% else %}
+                <li><a href="{% url 'login' %}" >Sign in</a></li>
+                {% endif %}
 				</ul>
 			</nav>
 		</div>
