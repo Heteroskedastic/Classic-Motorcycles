@@ -146,8 +146,8 @@ class NewSightingView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         result = super(NewSightingView, self).form_valid(form)
-        success_message('Sighting "{}" created successfully.'.format(
-                        self.object), self.request)
+        success_message('Sighting "#{}" created successfully.'.format(
+                        self.object.pk), self.request)
         return result
 
     def get_success_url(self):
