@@ -1,7 +1,7 @@
 {% load util_tags %}
 
 <li class="cl-effect-11 {% active_if 'index' %}"><a href="{% url 'index' %}" data-hover="">Home</a></li>
-<li class="cl-effect-11 {% active_if 'contact' %}"><a href="{% url 'contact'%}" data-hover="">Contact</a></li>
+<li class="cl-effect-11 {% active_if 'all_sighting' %}"><a href="{% url 'all_sighting' %}" data-hover="">All Sighting</a></li>
 {% if user.is_authenticated %}
 <li class="cl-effect-11 {% active_if 'my_sighting' 'new_sighting' 'edit_sighting' %}"><a href="{% url 'my_sighting' %}" data-hover="">My Sighting</a></li>
 <li class="cl-effect-11 {% active_if 'account_details' %}"><a href="{% url 'account_details' %}" data-hover="">{{user.username|title}}'s Account</a></li>

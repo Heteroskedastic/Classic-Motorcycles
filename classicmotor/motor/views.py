@@ -20,6 +20,7 @@ from classicmotor.helpers.utils import success_message, \
 from .forms import RegistrationForm, AccountDetailsForm, NewSightingForm, \
     EditSightingForm
 from .models import Search, Part, UserFeedback, Sighting
+from .filters import MySightingFilter, AllSightingFilter
 
 
 def get_current_page_size(request):
@@ -129,14 +130,24 @@ def ChangePasswordView(request):
     return response
 
 
-class MySightingView(LoginRequiredMixin, ListView):
-    model = Sighting
-    context_object_name = 'sightings'
-    template_name = 'motor/my-sighting.html'
+class AllSightingView(View):
 
-    def get_queryset(self):
-        return super(MySightingView, self
-                     ).get_queryset().filter(user=self.request.user)
+    def get(self, request, *args, **kwargs):
+        sightings = AllSightingFilter(
+            request.GET, queryset=Sighting.objects.all())
+
+        ctx = {'sightings': sightings,
+               'page_size': get_current_page_size(request)}
+        return render(request, "motor/all-sighting.html", ctx)
+
+
+class MySightingView(LoginRequiredMixin, View):
+
+    def get(self, request, *args, **kwargs):
+        qs = Sighting.objects.filter(user=request.user)
+        sightings = MySightingFilter(request.GET, queryset=qs)
+        ctx = {'sightings': sightings}
+        return render(request, "motor/my-sighting.html", ctx)
 
 
 class NewSightingView(LoginRequiredMixin, CreateView):

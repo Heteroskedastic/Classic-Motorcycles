@@ -2,7 +2,8 @@ from django.conf.urls import url
 
 from .views import IndexView, ContactView, LoginView, LogoutView, \
     RegisterView, AccountDetailsView, ChangePasswordView, SearchView, \
-    SaveFeedbackView, MySightingView, NewSightingView, EditSightingView
+    SaveFeedbackView, MySightingView, NewSightingView, EditSightingView, \
+    AllSightingView
 
 urlpatterns = [
     # ex: /motor/
@@ -15,6 +16,7 @@ urlpatterns = [
     url(r'^change-password/$', ChangePasswordView, name="change_password"),
     url(r'^search/$', SearchView.as_view(), name='partsearch-search'),
     url(r'^feedback/$', SaveFeedbackView, name='save-feedback'),
+    url(r'^all-sighting/$', AllSightingView.as_view(), name='all_sighting'),
     url(r'^my-sighting/$', MySightingView.as_view(), name='my_sighting'),
     url(r'^new-sighting/$', NewSightingView.as_view(), name='new_sighting'),
     url(r'^edit-sighting/(?P<id>\d+)/$$', EditSightingView.as_view(),

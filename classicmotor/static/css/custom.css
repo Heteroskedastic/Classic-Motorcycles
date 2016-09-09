@@ -912,3 +912,18 @@ figure {
   position: fixed;
   text-align: center;
 }
+
+.page-size {
+    width: 60px;
+}
+
+.filters {
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  text-transform: uppercase;
+  font-size: 11px;
+  color: #999;
+  margin-bottom: 5px;
+}
