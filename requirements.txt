@@ -3,3 +3,5 @@ psycopg2==2.6.2
 django-bootstrap3==7.0.1
 python-social-auth==0.2.19
 git+https://github.com/Old-World-Bikes/Classic_Vin_Lookup.git
+django-pagination-bootstrap==1.1
+django-filter==0.14.0

@@ -2,6 +2,7 @@ from django.conf import settings
 from django.utils import timezone
 from django.http import HttpResponse
 from django.views.generic import View, ListView
+from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.views import password_change
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
@@ -9,24 +10,33 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db import transaction
 import vinlookup.bsa
 import vinlookup.triumph
 
 
 from classicmotor.helpers.utils import success_message, \
     send_form_errors
-from .forms import RegistrationForm, AccountDetailsForm
-from .models import Search, Part, UserFeedback
+from .forms import RegistrationForm, AccountDetailsForm, NewSightingForm, \
+    EditSightingForm
+from .models import Search, Part, UserFeedback, Sighting
+
+
+def get_current_page_size(request):
+    page_size = settings.PAGINATION_DEFAULT_PAGINATION
+    try:
+        page_size = int(request.GET.get('page_size'))
+    except:
+        pass
+
+    if page_size <= 0:
+        page_size = settings.PAGINATION_DEFAULT_PAGINATION
+    return page_size
 
 
 class IndexView(View):
     def get(self, request, *args, **kwargs):
         return render(request, "motor/index.html", {})
-
-
-class HomeView(View):
-    def get(self, request, *args, **kwargs):
-        return render(request, "motor/home.html", {})
 
 
 class ContactView(View):
@@ -119,10 +129,49 @@ def ChangePasswordView(request):
     return response
 
 
+class MySightingView(LoginRequiredMixin, ListView):
+    model = Sighting
+    context_object_name = 'sightings'
+    template_name = 'motor/my-sighting.html'
+
+    def get_queryset(self):
+        return super(MySightingView, self
+                     ).get_queryset().filter(user=self.request.user)
+
+
+class NewSightingView(LoginRequiredMixin, CreateView):
+    form_class = NewSightingForm
+    template_name = 'motor/new-sighting.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        result = super(NewSightingView, self).form_valid(form)
+        success_message('Sighting "{}" created successfully.'.format(
+                        self.object), self.request)
+        return result
+
+    def get_success_url(self):
+        return reverse('new_sighting')
+
+
+class EditSightingView(LoginRequiredMixin, UpdateView):
+    pk_url_kwarg = 'id'
+    model = Sighting
+    form_class = EditSightingForm
+    template_name = 'motor/edit-sighting.html'
+
+    def get_queryset(self):
+        return super(EditSightingView, self
+                     ).get_queryset().filter(user=self.request.user)
+
+    def get_success_url(self):
+        return reverse('edit_sighting', args=(self.object.pk,))
+
+
 class SearchView(ListView):
     model = Search
     context_object_name = 'parts'
-    template_name = 'motor/search_results.html'
+    template_name = 'motor/search-results.html'
 
     def get_queryset(self):
         brand = self.request.GET.get('brand')

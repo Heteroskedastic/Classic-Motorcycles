@@ -1,5 +1,8 @@
 from django.contrib.auth.models import User
+from django.utils.safestring import mark_safe
 from django import forms
+
+from .models import Sighting
 
 
 class RegistrationForm(forms.ModelForm):
@@ -34,3 +37,29 @@ class AccountDetailsForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name']
+
+
+class SightingForm(forms.ModelForm):
+    class Meta:
+        model = Sighting
+        fields = ['make', 'model', 'year', 'frame_number', 'engine_number',
+                  'notes', 'country', 'state', 'city', 'contact', ]
+
+    def __init__(self, *args, **kwargs):
+        super(SightingForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            field_label = self.fields[field].label
+            if self.fields[field].required and field_label:
+                self.fields[field].widget.attrs.update({
+                    'placeholder': field_label,
+                })
+                self.fields[field].label = mark_safe(
+                    field_label + ' <span class="text text-danger">*</span>')
+
+
+class NewSightingForm(SightingForm):
+    pass
+
+
+class EditSightingForm(SightingForm):
+    pass

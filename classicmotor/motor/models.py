@@ -57,5 +57,5 @@ class Sighting(models.Model):
     state = models.CharField(max_length=256, null=True, blank=True)
     city = models.CharField(max_length=256, null=True, blank=True)
     contact = models.TextField(null=True, blank=True)
-    user = models.ForeignKey(User, related_name='assignment', null=True,
+    user = models.ForeignKey(User, related_name='sighting', null=True,
                              on_delete=models.SET_NULL)

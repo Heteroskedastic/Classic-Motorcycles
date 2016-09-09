@@ -35,7 +35,33 @@
         </div>
 		<div class="container">
         {% block header %}
-          {% include "header.html" %}
+            <header id="site-header">
+                <div class="row">
+                    <div class="col-md-12 centers">
+                        <img src="{% static "images/1443980753.png" %}">
+                    </div>
+                    <div class="col-md-4 col-sm-5 col-xs-8">
+                        <div class="logo centers">
+                            <h1><a href="{% url 'index' %}"><b>Old</b> World bikes</a></h1>
+                        </div>
+                    </div><!-- col-md-4 -->
+                    <div class="col-md-8 col-sm-7 col-xs-4">
+                        <nav class="main-nav" role="navigation">
+                            <div class="navbar-header">
+                                <button type="button" id="trigger-overlay" class="navbar-toggle">
+                                <span class="ion-navicon"></span>
+                                </button>
+                            </div>
+
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav navbar-right">
+                                {% include "menu_items.html" %}
+                            </ul>
+                            </div><!-- /.navbar-collapse -->
+                        </nav>
+                    </div><!-- col-md-8 -->
+                </div>
+            </header>
         	<div class="messages">
 			{% if messages %}
 			    {% for message in messages %}
@@ -65,15 +91,7 @@
 			<button type="button" class="overlay-close"><span class="ion-ios-close-empty"></span></button>
 			<nav>
 				<ul>
-                <li><a href="{% url 'home'%}" >Home</a></li>
-                <li><a href="{% url 'home'%}" >Web store</a></li>
-                <li><a href="{% url 'contact'%}" >Contact</a></li>
-                {% if user.is_authenticated %}
-                <li><a href="{% url 'account_details' %}" >{{user.username|title}}'s Account</a></li>
-                <li><a href="{% url 'logout' %}" >Sign out</a></li>
-                {% else %}
-                <li><a href="{% url 'login' %}" >Sign in</a></li>
-                {% endif %}
+                    {% include "menu_items.html" %}
 				</ul>
 			</nav>
 		</div>
