@@ -927,3 +927,7 @@ figure {
   color: #999;
   margin-bottom: 5px;
 }
+
+.sighting-detail .form-group {
+  margin-bottom: 8px !important;
+}

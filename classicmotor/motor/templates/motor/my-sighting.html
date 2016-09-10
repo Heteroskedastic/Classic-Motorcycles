@@ -14,7 +14,7 @@
             <th>{% sorting_link 'Year' 'year' %}</th>
             <th>{% sorting_link 'Frame Number' 'frame_number' %}</th>
             <th>{% sorting_link 'Engine Number' 'engine_number' %}</th>
-            <th style="width: 100px;">View Details</th>
+            <th style="width: 100px;">Edit/View</th>
         </tr>
         {% autopaginate sightings %}
         {% for sighting in sightings %}
@@ -24,7 +24,7 @@
             <td>{{sighting.year}}</td>
             <td>{{sighting.frame_number}}</td>
             <td>{{sighting.engine_number}}</td>
-            <td><a class="btn btn-sm btn-default" href="{% url 'edit_sighting' sighting.id %}"><span class="fa fa-eye"></span> Detail</a></td>
+            <td><a class="btn btn-sm btn-warning" href="{% url 'edit_sighting' sighting.id %}"><span class="fa fa-pencil"></span> Edit</a></td>
         </tr>
         {% empty %}
             <tr><td class="text-center gray-color" colspan="11"> <em>[NO RECORD!]</em></td></tr>

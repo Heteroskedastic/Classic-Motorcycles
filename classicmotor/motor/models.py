@@ -46,16 +46,19 @@ class UserFeedback(models.Model):
 
 
 class Sighting(models.Model):
-    make = models.CharField(max_length=256)
-    model = models.CharField(max_length=256)
-    year = models.IntegerField(null=True, blank=True,
+    make = models.CharField('Make', max_length=256)
+    model = models.CharField('Model', max_length=256)
+    year = models.IntegerField('Year', null=True, blank=True,
                                validators=[MinValueValidator(1800)])
-    frame_number = models.CharField(max_length=64, null=True, blank=True)
-    engine_number = models.CharField(max_length=64, null=True, blank=True)
-    notes = models.TextField(null=True, blank=True)
-    country = models.CharField(max_length=256, null=True, blank=True)
-    state = models.CharField(max_length=256, null=True, blank=True)
-    city = models.CharField(max_length=256, null=True, blank=True)
-    contact = models.TextField(null=True, blank=True)
+    frame_number = models.CharField('Frame Number', max_length=64, null=True,
+                                    blank=True)
+    engine_number = models.CharField('Engine Number', max_length=64, null=True,
+                                     blank=True)
+    notes = models.TextField('Notes', null=True, blank=True)
+    country = models.CharField('Country', max_length=256, null=True,
+                               blank=True)
+    state = models.CharField('State', max_length=256, null=True, blank=True)
+    city = models.CharField('City', max_length=256, null=True, blank=True)
+    contact = models.TextField('Contact', null=True, blank=True)
     user = models.ForeignKey(User, related_name='sighting', null=True,
                              on_delete=models.SET_NULL)

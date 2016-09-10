@@ -5,7 +5,7 @@ from django.views.generic import View, ListView
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.views import password_change
 from django.core.urlresolvers import reverse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -141,6 +141,17 @@ class AllSightingView(View):
         return render(request, "motor/all-sighting.html", ctx)
 
 
+class DetailSightingView(View):
+
+    def get(self, request, *args, **kwargs):
+        pk = kwargs.get('id')
+        sighting = get_object_or_404(Sighting, pk=pk)
+        fields = ['make', 'model', 'year', 'frame_number', 'engine_number',
+                  'country', 'state', 'city', 'notes', 'contact', ]
+        ctx = {'object': sighting, 'fields': fields}
+        return render(request, "motor/sighting.html", ctx)
+
+
 class MySightingView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
@@ -177,6 +188,16 @@ class EditSightingView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('edit_sighting', args=(self.object.pk,))
+
+
+class DeleteSightingView(LoginRequiredMixin, View):
+
+    def post(self, request, *args, **kwargs):
+        pk = kwargs.get('id')
+        qs = Sighting.objects.filter(user=request.user)
+        sighting = get_object_or_404(qs, pk=pk)
+        sighting.delete()
+        return redirect(reverse('my_sighting'))
 
 
 class SearchView(ListView):

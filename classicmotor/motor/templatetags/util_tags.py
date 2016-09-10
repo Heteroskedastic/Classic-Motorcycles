@@ -1,3 +1,4 @@
+import re
 from django import template
 from django.apps import apps
 from urllib.parse import urlencode
@@ -94,3 +95,25 @@ def page_size_combo(context, *sizes, **kwargs):
             size, selected)
     html += '</select>'
     return mark_safe(html)
+
+
+@register.filter(name='getattribute')
+def getattribute(value, arg):
+    """
+    Gets an attribute of an object dynamically AND recursively
+    from a string name
+    """
+    numeric_test = re.compile("^\d+$")
+    if "." in str(arg):
+        firstarg = str(arg).split(".")[0]
+        value = getattribute(value, firstarg)
+        arg = ".".join(str(arg).split(".")[1:])
+        return getattribute(value, arg)
+    if hasattr(value, str(arg)):
+        return getattr(value, arg)
+    elif hasattr(value, 'has_key') and arg in value:
+        return value[arg]
+    elif numeric_test.match(str(arg)) and len(value) > int(arg):
+        return value[int(arg)]
+    else:
+        return ''
