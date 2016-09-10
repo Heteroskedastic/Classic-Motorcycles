@@ -28,7 +28,7 @@ class Search(models.Model):
 
 
 class UserSearchHistory(models.Model):
-    search = models.ForeignKey(Search)
+    search = models.ForeignKey(Search, on_delete=models.CASCADE)
     pub_date = models.DateTimeField('date published')
     ip_address = models.GenericIPAddressField()
 
@@ -37,7 +37,7 @@ class UserSearchHistory(models.Model):
 
 
 class UserFeedback(models.Model):
-    search = models.ForeignKey(Search)
+    search = models.ForeignKey(Search, on_delete=models.CASCADE)
     date = models.DateTimeField()
     comment = models.CharField(max_length=2000)
 

@@ -209,20 +209,22 @@ class SearchView(ListView):
         brand = self.request.GET.get('brand')
         term = self.request.GET.get('term')
         search, created = Search.objects.get_or_create(brand=brand, term=term)
-        results = None
-        if not created:
+        results = []
+        if created:
+            vin_results = None
             if brand == "bsa":
-                results = vinlookup.bsa.decode(term)
+                vin_results = vinlookup.bsa.decode(term)
             elif brand == "triumph":
-                results = vinlookup.triumph.decode(term)
+                vin_results = vinlookup.triumph.decode(term)
             else:
                 raise Exception("Invalid brand!")
-            for result in results:
+            for result in vin_results:
                 part, created = Part.objects.get_or_create(
                             description=str(result))
                 search.results.add(part)
+                results.append(part)
         else:
-            results = search.results
+            results = search.results.all()
         search.save()
 
         self.request.session['last_search_id'] = search.id
