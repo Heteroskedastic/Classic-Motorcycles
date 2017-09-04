@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load util_tags %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+
+<div>
+  <h3>Sighting Details</h3>
+  <div class="col-md-8">
+    <table class="table table-bordered table-responsive">
+    {% for field in fields %}
+      <tr>
+        <td class="active" style="width: 50%"><strong>{% get_verbose_field_name "motor.Sighting" field %}</strong></td>
+        <td>{{object|getattribute:field|default:'-'}}</td>
+      </tr>
+    {% endfor %}
+    </table>
+  </div>
+
+</div>
+{% endblock content %}
+
